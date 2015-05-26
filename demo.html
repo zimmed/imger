@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Imger.js Demo</title>
+        <script src="lib/imger.js"></script>
+    </head>
+    <body>
+        <div>
+            <p id="loader">0 / 0</p>
+            <button id="btn" onclick="imger.load();">LOAD</button>
+            <div id="result"></div>
+        </div>
+        <script>
+            var imger = new Imger('IMG_91911924WaghornMap.JPG');
+            console.log(imger);
+            imger.start(function (e) {
+                console.log('Beggining load of: ' + e.url);
+                document.getElementById("btn").disabled = true;
+            }).complete(function (e) {
+                console.log('Image load complete!');
+                var img = document.createElement('img');
+                img.src = e.src;
+                document.getElementById('result').appendChild(img);
+                document.getElementById("btn").disabled = false;
+            }).error(function (e) {
+                console.log("ERROR!");
+                console.log(e.error);
+                console.log("\n\n");
+                document.getElementById("btn").disabled = false;
+            }).progress(function (e) {
+                document.getElementById("loader").innerHTML = '' + e.loaded + ' / ' + e.total;
+            });
+            var s = imger.getUrl();
+            console.log(s);
+            alert(s);
+        </script>
+    </body>
+</html>
